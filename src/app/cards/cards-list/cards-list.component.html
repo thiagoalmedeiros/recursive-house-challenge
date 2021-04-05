@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light searchbar-position">
+    <form class="form-inline">
+      <span class="summary"> {{(cards$ | async)?.length}}/{{(allCards$ | async)?.length}}</span>
+      <input class="form-control" type="search" [ngModelOptions]="{standalone: true}" [ngModel]="search$ |async" (ngModelChange)="onChange($event)" placeholder="Search" aria-label="Search">
+    </form>
+</nav>
+<div  class="d-flex flex-wrap justify-content-around content"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="50"
+     (scrolled)="onScroll()">
+  <div class="card individual-card"  *ngFor="let card of (cards$ |async)">
+    <img class="card-img-top" [src]="card.imageUrl" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{card.name}}</h5>
+      <p class="card-text">{{card.text}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{card.type}}</li>
+      <li class="list-group-item" >{{card.set.name}}</li>
+    </ul>
+  </div>
+</div>
